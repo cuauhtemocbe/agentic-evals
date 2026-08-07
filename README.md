@@ -141,7 +141,7 @@ Ahí van todas las prácticas y ejercicios del curso, organizados por módulo. C
 >
 > Ojo: esto también aplica a **valores dentro de archivos generados** (no solo a dónde se guardan). `dataset.json` guardaba internamente rutas relativas (`"path": "data/images/factura.png"`) que otros tests leían y abrían directo — al arreglar solo la ubicación del archivo pero no ese valor interno, los tests seguían rompiendo. Terminó igual: generar esos valores con `os.path.join(IMAGES_DIR, ...)` en vez de strings relativos.
 
-> El contenido de `docs/` no se versiona (ver `.gitignore`): cada estudiante mantiene sus propias prácticas en local.
+> El contenido de `docs/` se versiona en el repositorio (a diferencia de otros templates de curso donde queda en local sin trackear).
 
 ## Variables de entorno
 
