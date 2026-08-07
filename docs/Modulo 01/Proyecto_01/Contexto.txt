@@ -1,0 +1,22 @@
+Agente de Clasificación de Datos con LLM Local y Evaluación Automatizada (Evals)
+
+Este proyecto le permitiría aplicar la ejecución de modelos de lenguaje localmente con una API y asegurar la calidad del código mediante pruebas.
+
+Descripción del Proyecto
+
+LLM: Qwen3-VL-4B
+Objetivo: Analizar imágenes de facturas, tickest o logos y poder describirlas e indicar a que pertenecen
+
+Desarrollar un agente en Python que clasifique o etiquete datos no estructurados (como comentarios de clientes o logs de errores) utilizando un LLM.Componentes Vistos en el Módulo que Integraría
+IA Generativa y LLMs: Utilizar un modelo para realizar una tarea de razonamiento (clasificación o resumen).
+
+1
+LLMs Locales (Ollama): Instalar y usar Ollama para ejecutar un modelo pequeño en su máquina, asegurando privacidad y experiencia con entornos self-hosted.
+Python y Entornos Virtuales (Conda): Usar Python para la lógica del programa y Conda para gestionar las dependencias.
+APIs (Requests y JSON): Consumir el modelo a través de la API local que Ollama expone, enviando y recibiendo datos en formato JSON.
+Datasets y Prompts: Crear un pequeño dataset de prueba (en un archivo JSON o CSV) y un prompt bien estructurado para guiar la respuesta del modelo.
+Logs: Implementar el módulo logging de Python para registrar cada solicitud al LLM, el tiempo de respuesta y si hubo errores.
+Testing (pytest):
+Escribir fixtures de pytest para cargar los datos de prueba.
+Crear tests que verifiquen que la estructura de la respuesta JSON del LLM sea correcta y que el código no falle.
+Variables de Entorno (.env): Usar un archivo .env para almacenar parámetros de configuración del modelo o la URL del endpoint de Ollama.

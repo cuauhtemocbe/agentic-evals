@@ -1,0 +1,58 @@
+{
+  "text_tests": [
+    {
+      "input": "El servicio al cliente fue terrible, tardaron 3 horas en responder y el agente no resolvió mi problema.",
+      "expected_category": "Queja"
+    },
+    {
+      "input": "Error: Connection timeout at database pool connection. Failure code 504. Host: db-instance-01.internal",
+      "expected_category": "Error de Base de Datos"
+    },
+    {
+      "input": "Me encanta el nuevo diseño de la plataforma. La velocidad de búsqueda es excelente y la UX es increíble. ¡Buen trabajo!",
+      "expected_category": "Felicitación"
+    },
+    {
+      "input": "El sistema está arrojando una alerta crítica: Memory leak detected in worker thread #4. Usage reached 98.4%.",
+      "expected_category": "Alerta de Infraestructura"
+    }
+  ],
+  "image_tests": [
+    {
+      "path": "data/images/factura.png",
+      "expected_category": "Factura",
+      "description_keywords": [
+        "factura",
+        "emisor",
+        "soluciones",
+        "comercial",
+        "total",
+        "neto"
+      ]
+    },
+    {
+      "path": "data/images/ticket.png",
+      "expected_category": "Ticket",
+      "description_keywords": [
+        "ticket",
+        "supermercado",
+        "caja",
+        "cajero",
+        "compra",
+        "total"
+      ]
+    },
+    {
+      "path": "data/images/logo.png",
+      "expected_category": "Logo",
+      "description_keywords": [
+        "logo",
+        "actum",
+        "logos",
+        "polígono",
+        "triángulo",
+        "tecnología"
+      ]
+    }
+  ]
+}
