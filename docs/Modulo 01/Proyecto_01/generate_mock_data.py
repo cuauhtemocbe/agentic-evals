@@ -2,6 +2,8 @@ import os
 import json
 from PIL import Image, ImageDraw, ImageFont
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def get_font(font_name="arial.ttf", size=16):
     """
     Carga una fuente TrueType estándar de Windows si está disponible,
@@ -203,14 +205,19 @@ def create_logo_image(path):
     print(f"Imagen de LOGO creada en: {path}")
 
 def main():
-    # Crear carpetas de datos
-    os.makedirs("data/images", exist_ok=True)
-    
+    # Crear carpetas de datos (ancladas a la ubicación de este script, no al cwd)
+    images_dir = os.path.join(BASE_DIR, "data", "images")
+    os.makedirs(images_dir, exist_ok=True)
+
+    factura_path = os.path.join(images_dir, "factura.png")
+    ticket_path = os.path.join(images_dir, "ticket.png")
+    logo_path = os.path.join(images_dir, "logo.png")
+
     # Crear imágenes mock
-    create_factura_image("data/images/factura.png")
-    create_ticket_image("data/images/ticket.png")
-    create_logo_image("data/images/logo.png")
-    
+    create_factura_image(factura_path)
+    create_ticket_image(ticket_path)
+    create_logo_image(logo_path)
+
     # Crear dataset.json
     dataset = {
         "text_tests": [
@@ -233,26 +240,27 @@ def main():
         ],
         "image_tests": [
             {
-                "path": "data/images/factura.png",
+                "path": factura_path,
                 "expected_category": "Factura",
                 "description_keywords": ["factura", "emisor", "soluciones", "comercial", "total", "neto"]
             },
             {
-                "path": "data/images/ticket.png",
+                "path": ticket_path,
                 "expected_category": "Ticket",
                 "description_keywords": ["ticket", "supermercado", "caja", "cajero", "compra", "total"]
             },
             {
-                "path": "data/images/logo.png",
+                "path": logo_path,
                 "expected_category": "Logo",
                 "description_keywords": ["logo", "actum", "logos", "polígono", "triángulo", "tecnología"]
             }
         ]
     }
-    
-    with open("data/dataset.json", "w", encoding="utf-8") as f:
+
+    dataset_path = os.path.join(BASE_DIR, "data", "dataset.json")
+    with open(dataset_path, "w", encoding="utf-8") as f:
         json.dump(dataset, f, indent=2, ensure_ascii=False)
-    print("Archivo 'data/dataset.json' creado exitosamente.")
+    print(f"Archivo '{dataset_path}' creado exitosamente.")
 
 if __name__ == "__main__":
     main()

@@ -19,7 +19,7 @@
   ],
   "image_tests": [
     {
-      "path": "data/images/factura.png",
+      "path": "/app/docs/Modulo 01/Proyecto_01/data/images/factura.png",
       "expected_category": "Factura",
       "description_keywords": [
         "factura",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "path": "data/images/ticket.png",
+      "path": "/app/docs/Modulo 01/Proyecto_01/data/images/ticket.png",
       "expected_category": "Ticket",
       "description_keywords": [
         "ticket",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "path": "data/images/logo.png",
+      "path": "/app/docs/Modulo 01/Proyecto_01/data/images/logo.png",
       "expected_category": "Logo",
       "description_keywords": [
         "logo",
