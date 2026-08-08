@@ -2,6 +2,7 @@ import base64
 import json
 import os
 import time
+from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
@@ -9,6 +10,14 @@ from logger_config import logger
 
 # Cargar variables de entorno
 load_dotenv()
+
+PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+
+
+def _load_prompt(name: str) -> str:
+    """Carga el texto de un prompt desde prompts/{name}.md, anclado a este archivo."""
+    return (PROMPTS_DIR / f"{name}.md").read_text(encoding="utf-8").strip()
+
 
 class DataClassifierAgent:
     """
@@ -139,16 +148,7 @@ class DataClassifierAgent:
         """
         logger.info(f"Iniciando clasificación de texto. Longitud del texto: {len(text)} caracteres.")
         
-        system_prompt = (
-            "Eres un asistente experto en clasificación y análisis de datos. "
-            "Tu tarea es clasificar el texto proporcionado por el usuario en EXACTAMENTE UNA de las siguientes categorías:\n"
-            f"{categories}\n\n"
-            "Debes responder EXCLUSIVAMENTE con un objeto JSON estructurado que contenga las siguientes claves:\n"
-            "- 'category': La categoría seleccionada de la lista provista.\n"
-            "- 'description': Una breve descripción en español de por qué se seleccionó esa categoría (justificación lógica).\n"
-            "- 'confidence': Un número flotante entre 0.0 y 1.0 que indica tu nivel de confianza en la clasificación.\n"
-            "No incluyas explicaciones previas, ni markdown de código, ni texto adicional fuera del JSON."
-        )
+        system_prompt = _load_prompt("classify_text_system").format(categories=categories)
         
         messages = [
             {"role": "system", "content": system_prompt},
@@ -212,22 +212,11 @@ class DataClassifierAgent:
             
         # Prompt por defecto si no se provee uno personalizado
         if not prompt:
-            prompt = (
-                "Describe detalladamente la imagen proporcionada. Clasifícala como una de las siguientes categorías:\n"
-                f"{categories if categories else ['Factura', 'Ticket', 'Logo', 'Otro']}\n"
-                "e indica claramente qué elementos visuales o textuales te permitieron llegar a esa conclusión."
+            prompt = _load_prompt("analyze_image_default_user").format(
+                categories=categories if categories else ["Factura", "Ticket", "Logo", "Otro"]
             )
-            
-        system_prompt = (
-            "Eres un agente experto en visión artificial y análisis de documentos e imágenes. "
-            "Tu tarea es analizar la imagen provista (que puede ser una factura, un ticket de compra, un logo, etc.) "
-            "y retornar un análisis estructurado en formato JSON.\n"
-            "El objeto JSON retornado debe tener EXACTAMENTE las siguientes claves:\n"
-            "- 'category': La categoría del documento ('Factura', 'Ticket', 'Logo' u 'Otro').\n"
-            "- 'description': Una descripción detallada en español de lo que se observa en la imagen y qué elementos justifican tu respuesta.\n"
-            "- 'confidence': Un número flotante entre 0.0 y 1.0 que indique tu nivel de certeza.\n"
-            "Responde EXCLUSIVAMENTE con el objeto JSON estructurado."
-        )
+
+        system_prompt = _load_prompt("analyze_image_system")
         
         messages = [
             {"role": "system", "content": system_prompt},

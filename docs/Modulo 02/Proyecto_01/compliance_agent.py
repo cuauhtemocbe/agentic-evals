@@ -1,5 +1,6 @@
 import logging
 
+import config
 from anonymizer import PIIAnonymizer
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
@@ -108,22 +109,10 @@ class ComplianceAgent:
         print(f"[CoT] {step_4_msg}")
         
         # Instrucción del sistema para el Oficial de Cumplimiento IA
-        system_instruction = (
-            "Eres un Oficial de Cumplimiento de Datos Personales y Privacidad en México.\n"
-            "Tu tarea es analizar el documento anonimizado provisto y evaluar sus riesgos legales en base "
-            "EXCLUSIVAMENTE al contexto legal (LFPDPPP, LGPDPPSO y Marco General) que se te proporciona.\n"
-            "Reglas estrictas:\n"
-            "1. No inventes artículos ni leyes que no estén en el contexto legal proporcionado (Evita Alucinaciones).\n"
-            "2. Identifica si el documento recaba datos sensibles y si cumple con los requisitos legales (ej. consentimiento escrito).\n"
-            "3. Evalúa si el Aviso de Privacidad está presente o es requerido, y si las transferencias de datos son válidas.\n"
-            "4. NUNCA inventes identidades de personas reales. Usa exclusivamente las etiquetas de anonimización provistas (ej. [NOMBRE_1], [DIRECCION_1]).\n"
-            "5. Tu respuesta debe estructurarse en: I. Resumen del Documento, II. Análisis de Datos Personales Sensibles Detectados, III. Riesgos de Incumplimiento e Infracciones Específicas (citando artículos), y IV. Recomendaciones de Mitigación."
-        )
-        
-        prompt = (
-            f"CONTEXTO LEGAL (RAG):\n{legal_context}\n\n"
-            f"DOCUMENTO ANONIMIZADO A ANALIZAR:\n{anonymized_doc}\n\n"
-            f"Por favor, realiza el análisis de cumplimiento y riesgos:"
+        system_instruction = config.load_prompt("compliance_system_instruction")
+
+        prompt = config.load_prompt("compliance_analysis_prompt").format(
+            legal_context=legal_context, anonymized_doc=anonymized_doc
         )
         
         # Enviar prompt anonimizado al LLM (Temperatura baja 0.1 para respuestas deterministas)

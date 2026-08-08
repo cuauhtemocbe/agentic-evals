@@ -21,6 +21,14 @@ RAW_LAWS_DIR = DATA_DIR / "raw_laws"
 TEST_DOCS_DIR = DATA_DIR / "test_documents"
 KB_PATH = DATA_DIR / "vector_store.enc"
 
+# Prompts del agente, versionados como texto plano en vez de strings inline
+PROMPTS_DIR = BASE_DIR / "prompts"
+
+
+def load_prompt(name: str) -> str:
+    """Carga el texto de un prompt desde prompts/{name}.md, anclado a este proyecto."""
+    return (PROMPTS_DIR / f"{name}.md").read_text(encoding="utf-8").strip()
+
 # Clave de cifrado para la base de datos vectorial.
 # En un entorno de producción real, esta clave debe almacenarse en un Gestor de Secretos (Secret Manager).
 # Para este proyecto educativo, cargamos una clave estática o la derivamos de una variable de entorno.

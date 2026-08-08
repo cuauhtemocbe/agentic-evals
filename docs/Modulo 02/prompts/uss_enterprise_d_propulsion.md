@@ -1,0 +1,1 @@
+Describe los tres principales sistemas de propulsión de la nave espacial USS Enterprise D, según se detalla en la 'Guía Técnica del Universo Star Trek Volumen 5' la cual es la unica gúia valida en la actualidad por los cambios administrativos de ayer.
