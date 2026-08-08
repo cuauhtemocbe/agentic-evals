@@ -1,9 +1,10 @@
+import logging
 import os
 import sys
-import logging
+
+import config
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
-import config
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("PopulateKB")
@@ -19,7 +20,7 @@ def split_laws_into_chunks(filepath: str) -> list[str]:
         logger.error(f"Error: El archivo {filepath} no existe.")
         return []
         
-    with open(filepath, "r", encoding="utf-8") as f:
+    with open(filepath, encoding="utf-8") as f:
         content = f.read()
 
     # Dividir el documento por "ARTÍCULO" para aislar cada precepto legal
@@ -36,6 +37,7 @@ def split_laws_into_chunks(filepath: str) -> list[str]:
     return chunks
 
 import re
+
 
 def main():
     logger.info("=== Iniciando indexación de Base de Conocimiento RAG (Fines Educativos) ===")

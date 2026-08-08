@@ -1,7 +1,8 @@
 import os
+
 import pytest
-import numpy as np
 from knowledge_base import EncryptedVectorStore
+
 
 @pytest.fixture
 def temp_db(tmp_path):

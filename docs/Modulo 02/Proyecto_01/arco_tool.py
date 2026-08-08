@@ -1,4 +1,5 @@
 import logging
+
 from anonymizer import PIIAnonymizer
 
 logger = logging.getLogger("ARCOTool")

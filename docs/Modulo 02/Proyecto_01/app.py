@@ -1,18 +1,18 @@
-import os
-import sys
 import logging
+import os
 import re
+import sys
+
 import streamlit as st
-import numpy as np
 
 # Cargar configuración y módulos del proyecto
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import config
+from arco_tool import ARCOTool
+from compliance_agent import ComplianceAgent
+from eval_suite import ComplianceEvalSuite
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
-from compliance_agent import ComplianceAgent
-from arco_tool import ARCOTool
-from eval_suite import ComplianceEvalSuite
 
 # Desactivar logs detallados de librerías en la consola
 logging.getLogger("requests").setLevel(logging.WARNING)
@@ -129,7 +129,6 @@ def html_format_placeholders(text: str) -> str:
     formatted = formatted.replace("\n", "<br>")
     return formatted
 
-import re
 
 # Inicializar clientes
 @st.cache_resource
@@ -227,7 +226,7 @@ with tabs[0]:
             placeholder="Ej: Contrato de servicios médicos celebrado por Juan Pérez, con CURP PEGJ850615HMNDRR09..."
         )
     else:
-        with open(docs_dir / selected_option, "r", encoding="utf-8") as f:
+        with open(docs_dir / selected_option, encoding="utf-8") as f:
             doc_text = f.read()
         st.text_area("Contenido del documento seleccionado:", value=doc_text, height=250, disabled=True)
 
@@ -272,19 +271,19 @@ with tabs[0]:
                 # 3. DETECTAR SI SE DISPARÓ ESCALACIÓN HUMANA
                 # Buscamos en el log si este análisis disparó alertas
                 if os.path.exists("data/human_escalations.log"):
-                    with open("data/human_escalations.log", "r", encoding="utf-8") as lf:
+                    with open("data/human_escalations.log", encoding="utf-8") as lf:
                         log_content = lf.read()
                     
                     # Si el log contiene términos del documento actual, mostramos la alerta de supervisión humana
                     # Para simplificar la demo, verificamos si hay algún indicador reciente
                     if any(term.lower() in doc_text.lower() for term in ["biométrico", "oposición", "opongo", "salud", "glucosa"]):
                         st.markdown(
-                            f'<div class="escalation-box">'
-                            f'⚠️ <b>[CANAL DE ESCALACIÓN HUMANA ACTIVADO]</b><br>'
-                            f'El agente ha detectado solicitudes de Oposición o evaluación de Datos Sensibles de Alto Riesgo. '
-                            f'Se ha generado un ticket automático en la ruta <code>data/human_escalations.log</code>. '
-                            f'Se requiere la intervención del Oficial de Privacidad Humano para validar esta decisión automatizada.'
-                            f'</div>', 
+                            '<div class="escalation-box">'
+                            '⚠️ <b>[CANAL DE ESCALACIÓN HUMANA ACTIVADO]</b><br>'
+                            'El agente ha detectado solicitudes de Oposición o evaluación de Datos Sensibles de Alto Riesgo. '
+                            'Se ha generado un ticket automático en la ruta <code>data/human_escalations.log</code>. '
+                            'Se requiere la intervención del Oficial de Privacidad Humano para validar esta decisión automatizada.'
+                            '</div>', 
                             unsafe_allow_html=True
                         )
 
@@ -315,7 +314,7 @@ with tabs[1]:
                 st.markdown(f"**Resultados encontrados ({len(search_results)}):**")
                 for idx, res in enumerate(search_results):
                     with st.expander(f"📖 [{res['source']}] - Similitud: {res['similarity']:.4f}"):
-                        st.markdown(f"**Contenido del Artículo:**")
+                        st.markdown("**Contenido del Artículo:**")
                         st.write(res["text"])
 
 # -------------------------------------------------------------

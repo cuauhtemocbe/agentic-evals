@@ -1,7 +1,8 @@
 import logging
+
 from anonymizer import PIIAnonymizer
-from knowledge_base import EncryptedVectorStore
 from gemini_client import GeminiClient
+from knowledge_base import EncryptedVectorStore
 from logger_escalation import EscalationLogger
 
 logger = logging.getLogger("ComplianceAgent")

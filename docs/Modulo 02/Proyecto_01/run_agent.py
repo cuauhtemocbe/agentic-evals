@@ -1,7 +1,5 @@
-import os
-import sys
 import logging
-from dotenv import load_dotenv
+import os
 
 # Configurar logs
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -11,12 +9,13 @@ logger = logging.getLogger("ComplianceCLI")
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-from config import RAW_LAWS_DIR, TEST_DOCS_DIR, KB_PATH, GEMINI_API_KEY
+from arco_tool import ARCOTool
+from compliance_agent import ComplianceAgent
+from config import GEMINI_API_KEY, KB_PATH, TEST_DOCS_DIR
+from eval_suite import ComplianceEvalSuite
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
-from compliance_agent import ComplianceAgent
-from arco_tool import ARCOTool
-from eval_suite import ComplianceEvalSuite
+
 
 def print_banner():
     print("""
@@ -61,7 +60,7 @@ def select_document() -> str:
             return "\n".join(lines)
         elif 1 <= opt <= len(docs):
             filepath = TEST_DOCS_DIR / docs[opt - 1]
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 return f.read()
     except ValueError:
         print("[!] Opción inválida.")

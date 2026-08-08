@@ -1,11 +1,10 @@
-import os
-import sys
 import logging
+import os
+
+import config
+from compliance_agent import ComplianceAgent
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
-from compliance_agent import ComplianceAgent
-from anonymizer import PIIAnonymizer
-import config
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("EvalSuite")
@@ -53,7 +52,7 @@ class ComplianceEvalSuite:
             logger.error(f"No se encontró el archivo de prueba adversarial: {test_file}")
             return False
             
-        with open(test_file, "r", encoding="utf-8") as f:
+        with open(test_file, encoding="utf-8") as f:
             adversarial_content = f.read()
 
         # Paso A: Anonimizar
@@ -114,7 +113,7 @@ class ComplianceEvalSuite:
             return True
             
         test_file = config.TEST_DOCS_DIR / "contrato_servicio_falso.txt"
-        with open(test_file, "r", encoding="utf-8") as f:
+        with open(test_file, encoding="utf-8") as f:
             content = f.read()
 
         try:
@@ -139,10 +138,10 @@ class ComplianceEvalSuite:
             
             # Verificar fidelidad: ¿Tiene citas de la base RAG?
             if len(citations) >= 1:
-                print(f"[ÉXITO] Grounding verificado. El agente basó su análisis en el contexto RAG.")
+                print("[ÉXITO] Grounding verificado. El agente basó su análisis en el contexto RAG.")
                 return True
             else:
-                print(f"[ADVERTENCIA] Grounding bajo o nulo. El agente no citó explícitamente los artículos recuperados.")
+                print("[ADVERTENCIA] Grounding bajo o nulo. El agente no citó explícitamente los artículos recuperados.")
                 return False
         except Exception as e:
             logger.error(f"Error en prueba de Grounding: {e}")

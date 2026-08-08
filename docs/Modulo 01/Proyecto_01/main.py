@@ -1,10 +1,7 @@
-import os
-import sys
-import time
+import generate_mock_data
 import requests
 from agent import DataClassifierAgent
-import generate_mock_data
-from logger_config import logger
+
 
 def is_ollama_active():
     """Valida si la API local de Ollama está activa."""
@@ -60,7 +57,7 @@ def main():
 
 def demo_mock(agent):
     """Ejecuta una demostración usando mocks en caso de no tener Ollama activo."""
-    from unittest.mock import patch, MagicMock
+    from unittest.mock import MagicMock, patch
     
     print("\n--- [DEMO TEXTO MOCKEADO] ---")
     mock_content = '{"category": "Error de Base de Datos", "description": "El log describe un timeout de conexion a la base de datos db-instance-01 en el puerto estandar.", "confidence": 0.96}'

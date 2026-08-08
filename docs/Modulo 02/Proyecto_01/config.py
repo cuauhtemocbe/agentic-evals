@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Cargar variables de entorno desde el archivo .env
@@ -26,6 +27,7 @@ KB_PATH = DATA_DIR / "vector_store.enc"
 ENCRYPTION_KEY_RAW = os.getenv("DB_ENCRYPTION_KEY", "compliance_agent_educational_key_32bytes_!!")
 # Asegurar que la clave tenga exactamente 32 bytes para AES-256
 import hashlib
+
 ENCRYPTION_KEY = hashlib.sha256(ENCRYPTION_KEY_RAW.encode()).digest()
 
 # Crear los directorios necesarios si no existen

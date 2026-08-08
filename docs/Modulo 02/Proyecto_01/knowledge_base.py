@@ -1,9 +1,10 @@
-import os
 import json
 import logging
+import os
+
+import config
 import numpy as np
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-import config
 
 logger = logging.getLogger("KnowledgeBase")
 

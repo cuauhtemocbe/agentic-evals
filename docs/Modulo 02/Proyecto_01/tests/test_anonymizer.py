@@ -1,5 +1,5 @@
-import pytest
 from anonymizer import PIIAnonymizer
+
 
 def test_anonymize_email():
     anonymizer = PIIAnonymizer()

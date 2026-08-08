@@ -1,7 +1,7 @@
-import json
 import logging
-import requests
+
 import config
+import requests
 
 # Configuración del logging educativo
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

@@ -1,8 +1,8 @@
-import os
+from unittest.mock import MagicMock, patch
+
 import pytest
 import requests
-from unittest.mock import patch, MagicMock
-from agent import DataClassifierAgent
+
 
 # Función auxiliar para comprobar si Ollama está disponible localmente
 def is_ollama_available():

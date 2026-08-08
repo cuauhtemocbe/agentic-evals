@@ -1,6 +1,7 @@
+import json
 import os
 import sys
-import json
+
 import pytest
 
 # Anclado al directorio del proyecto (no al cwd del proceso que invoca pytest)
@@ -9,6 +10,7 @@ sys.path.insert(0, PROJECT_ROOT)
 
 import generate_mock_data
 from agent import DataClassifierAgent
+
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_mock_data():
@@ -27,7 +29,7 @@ def dataset_content():
     Fixture que lee y retorna el contenido estructurado del dataset de prueba.
     """
     dataset_path = os.path.join(PROJECT_ROOT, "data", "dataset.json")
-    with open(dataset_path, "r", encoding="utf-8") as f:
+    with open(dataset_path, encoding="utf-8") as f:
         return json.load(f)
 
 @pytest.fixture

@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 from PIL import Image, ImageDraw, ImageFont
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -11,7 +12,7 @@ def get_font(font_name="arial.ttf", size=16):
     """
     try:
         return ImageFont.truetype(font_name, size)
-    except IOError:
+    except OSError:
         # Fallback a la fuente por defecto en caso de no encontrarse
         return ImageFont.load_default()
 
