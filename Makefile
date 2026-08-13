@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help build up up-d down logs test coverage-xml test-v lint format-check typecheck lock-check install-hooks install notebook-local test-local lint-local notebook
+.PHONY: help build up up-d down logs test coverage-xml test-v lint format-check typecheck lock-check install-hooks install notebook-local test-local lint-local notebook streamlit-p1 streamlit-p1-local
 
 # --- Docker (flujo principal) ---
 
@@ -43,6 +43,9 @@ lock-check: up-d ## Verificar que poetry.lock esté sincronizado con pyproject.t
 notebook: up-d ## Levantar JupyterLab dentro de Docker (http://localhost:8888), notebooks en docs/
 	docker compose exec api jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --notebook-dir=/app/docs --ServerApp.token='' --ServerApp.password='' --ServerApp.disable_check_xsrf=True
 
+streamlit-p1: up-d ## Levantar la app Streamlit de Proyecto_01 (Modulo 01) en Docker (http://localhost:8501)
+	docker compose exec api streamlit run "docs/Modulo 01/Proyecto_01/app.py" --server.address=0.0.0.0 --server.port=8501
+
 install-hooks: ## Habilitar el git hook de pre-commit (lint + format, corre en Docker)
 	git config core.hooksPath .githooks
 	chmod +x .githooks/pre-commit
@@ -60,6 +63,9 @@ test-local: ## [local] Correr tests con poetry
 
 lint-local: ## [local] Correr ruff check con poetry
 	poetry run ruff check docs/
+
+streamlit-p1-local: ## [local] Levantar la app Streamlit de Proyecto_01 (Modulo 01) con poetry
+	poetry run streamlit run "docs/Modulo 01/Proyecto_01/app.py"
 
 help: ## Mostrar esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'

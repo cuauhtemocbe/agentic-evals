@@ -26,6 +26,9 @@ coverage.xml
 # jupyter
 .ipynb_checkpoints/
 
+# uploads temporales de las apps de Streamlit (docs/Modulo XX/Proyecto_XX/data/uploads/)
+data/uploads/
+
 # docker
 *.log
 
