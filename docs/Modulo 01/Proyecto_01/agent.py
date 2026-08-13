@@ -38,7 +38,8 @@ class DataClassifierAgent:
             "model": self.model,
             "messages": messages,
             "stream": False,
-            "format": "json"  # Forzar respuesta estructurada en formato JSON
+            "format": "json",  # Forzar respuesta estructurada en formato JSON
+            "think": False,  # Desactiva el thinking de modelos como qwen3-vl
         }
         
         start_time = time.time()
@@ -60,8 +61,14 @@ class DataClassifierAgent:
             
             # Parsear la respuesta
             response_json = response.json()
-            message_content = response_json.get("message", {}).get("content", "").strip()
-            
+            message = response_json.get("message", {})
+            message_content = (message.get("content") or "").strip()
+            if not message_content:
+                # Algunos builds de modelos con razonamiento (p.ej. qwen3-vl) devuelven
+                # el JSON forzado dentro de 'thinking' en vez de 'content', incluso con
+                # 'think': False. Si 'content' viene vacío, probamos ahí como fallback.
+                message_content = (message.get("thinking") or "").strip()
+
             logger.info(f"Respuesta recibida exitosamente en {elapsed_time:.2f} segundos.")
             
             # Intentar parsear el contenido de la respuesta a un diccionario JSON
