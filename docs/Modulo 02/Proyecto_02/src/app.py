@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import config
 from arco_tool import ARCOTool
 from compliance_agent import ComplianceAgent
-from eval_suite import ComplianceEvalSuite
+from evals.eval_suite import ComplianceEvalSuite
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
 

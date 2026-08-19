@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
-# Directorio raíz del proyecto
-BASE_DIR = Path(__file__).resolve().parent
+# Directorio raíz del proyecto (data/ y prompts/ viven fuera de src/)
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuración del LLM
 # Usamos gemini-3.1-flash-lite por especificación del usuario

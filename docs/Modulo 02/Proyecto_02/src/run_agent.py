@@ -12,7 +12,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 from arco_tool import ARCOTool
 from compliance_agent import ComplianceAgent
 from config import GEMINI_API_KEY, KB_PATH, TEST_DOCS_DIR
-from eval_suite import ComplianceEvalSuite
+from evals.eval_suite import ComplianceEvalSuite
 from gemini_client import GeminiClient
 from knowledge_base import EncryptedVectorStore
 
