@@ -142,7 +142,7 @@ client, db, agent = get_clients()
 
 # --- MENÚ LATERAL (SIDEBAR) ---
 with st.sidebar:
-    st.image("https://img.icons8.com/nolan/128/security-shield.png", width=80)
+    st.image("https://img.icons8.com/nolan/128/shield.png", width=80)
     st.title("Panel de Control")
     st.markdown("---")
     
