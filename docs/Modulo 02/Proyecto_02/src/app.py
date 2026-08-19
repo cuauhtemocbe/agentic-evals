@@ -196,9 +196,10 @@ st.title("🛡️ Agente de Cumplimiento Legal y de Privacidad")
 st.markdown("Este agente detecta datos personales sensibles, aplica **anonimización en tiempo real** localmente y genera un reporte de riesgos legales basado en grounding legal de las leyes **LFPDPPP** y **LGPDPPSO**.")
 
 tabs = st.tabs([
-    "🔍 Analizar Documento", 
-    "🔑 Base RAG Cifrada", 
-    "🧪 Suite de Evaluaciones (Evals)", 
+    "🔍 Analizar Documento",
+    "🔑 Base RAG Cifrada",
+    "🧪 Suite de Evaluaciones (Evals)",
+    "🗂️ Auditoría (Escalación Humana)",
     "🎓 Centro Educativo"
 ])
 
@@ -355,9 +356,46 @@ with tabs[2]:
                 st.write("El agente fundamenta sus respuestas exclusivamente en los artículos legales recuperados por el RAG.")
 
 # -------------------------------------------------------------
-# TAB 4: CENTRO EDUCATIVO
+# TAB 4: AUDITORÍA (ESCALACIÓN HUMANA)
 # -------------------------------------------------------------
 with tabs[3]:
+    st.header("🗂️ Auditoría de Escalación Humana")
+    st.write(
+        "Registro de eventos donde el agente detectó Oposición del titular (Derecho ARCO) o "
+        "Datos Personales Sensibles de Alto Riesgo, y transfirió el caso a un Oficial de "
+        "Privacidad Humano para su revisión."
+    )
+
+    escalation_log_path = config.DATA_DIR / "human_escalations.log"
+
+    if not escalation_log_path.exists():
+        st.info("Aún no se ha registrado ninguna escalación humana en este entorno.")
+    else:
+        with open(escalation_log_path, encoding="utf-8") as f:
+            log_content = f.read()
+
+        if not log_content.strip():
+            st.info("El archivo de auditoría existe pero todavía no contiene registros.")
+        else:
+            st.caption(f"Ruta: `{escalation_log_path}`")
+            # st.code escapa el contenido automáticamente (sin unsafe_allow_html),
+            # por lo que un log con texto de usuario no puede inyectar HTML/JS.
+            st.code(log_content, language="text")
+
+            st.download_button(
+                "⬇️ Descargar log de auditoría",
+                data=log_content,
+                file_name="human_escalations.log",
+                mime="text/plain",
+            )
+
+        if st.button("🔄 Refrescar log"):
+            st.rerun()
+
+# -------------------------------------------------------------
+# TAB 5: CENTRO EDUCATIVO
+# -------------------------------------------------------------
+with tabs[4]:
     st.header("Centro Educativo de Privacidad y Cumplimiento")
     
     st.markdown("""
