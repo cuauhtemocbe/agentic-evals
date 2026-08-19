@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help build up up-d down logs test coverage-xml test-v lint format-check typecheck lock-check install-hooks install notebook-local test-local lint-local notebook streamlit-p1 streamlit-p1-local
+.PHONY: help build up up-d down logs test coverage-xml test-v lint format-check typecheck lock-check install-hooks install notebook-local test-local lint-local notebook streamlit-p1 streamlit-p1-local streamlit-m02-p2 streamlit-m02-p2-local
 
 # --- Docker (flujo principal) ---
 
@@ -66,6 +66,12 @@ lint-local: ## [local] Correr ruff check con poetry
 
 streamlit-p1-local: ## [local] Levantar la app Streamlit de Proyecto_01 (Modulo 01) con poetry
 	poetry run streamlit run "docs/Modulo 01/Proyecto_01/app.py"
+
+streamlit-m02-p2: up-d ## Levantar la app Streamlit de Proyecto_02 (Modulo 02) en Docker (http://localhost:8502)
+	docker compose exec api streamlit run "docs/Modulo 02/Proyecto_02/app.py" --server.address=0.0.0.0 --server.port=8502
+
+streamlit-m02-p2-local: ## [local] Levantar la app Streamlit de Proyecto_02 (Modulo 02) con poetry
+	poetry run streamlit run "docs/Modulo 02/Proyecto_02/app.py" --server.port=8502
 
 help: ## Mostrar esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
