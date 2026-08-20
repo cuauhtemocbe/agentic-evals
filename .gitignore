@@ -22,6 +22,8 @@ dmypy.json
 htmlcov/
 .coverage
 coverage.xml
+.deepeval/
+.deepeval-cache.json
 
 # jupyter
 .ipynb_checkpoints/
