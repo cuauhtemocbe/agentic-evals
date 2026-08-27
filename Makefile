@@ -80,4 +80,4 @@ streamlit-m03-p3-local: ## [local] Levantar la app Streamlit de Proyecto_3 (Modu
 	poetry run streamlit run "docs/Modulo 03/Proyecto_3/app.py" --server.port=8503
 
 help: ## Mostrar esta ayuda
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-24s\033[0m %s\n", $$1, $$2}'
