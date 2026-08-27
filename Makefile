@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help build up up-d down logs test coverage-xml test-v lint format-check typecheck lock-check install-hooks install notebook-local test-local lint-local notebook streamlit-p1 streamlit-p1-local streamlit-m02-p2 streamlit-m02-p2-local
+.PHONY: help build up up-d down logs test coverage-xml test-v lint format-check typecheck lock-check install-hooks install notebook-local test-local lint-local notebook streamlit-p1 streamlit-p1-local streamlit-m02-p2 streamlit-m02-p2-local streamlit-m03-p3 streamlit-m03-p3-local
 
 # --- Docker (flujo principal) ---
 
@@ -46,6 +46,9 @@ notebook: up-d ## Levantar JupyterLab dentro de Docker (http://localhost:8888), 
 streamlit-p1: up-d ## Levantar la app Streamlit de Proyecto_01 (Modulo 01) en Docker (http://localhost:8501)
 	docker compose exec api streamlit run "docs/Modulo 01/Proyecto_01/app.py" --server.address=0.0.0.0 --server.port=8501
 
+streamlit-m03-p3: up-d ## Levantar la app Streamlit de Proyecto_3 (Modulo 03) en Docker (http://localhost:8503)
+	docker compose exec api streamlit run "docs/Modulo 03/Proyecto_3/app.py" --server.address=0.0.0.0 --server.port=8503
+
 install-hooks: ## Habilitar el git hook de pre-commit (lint + format, corre en Docker)
 	git config core.hooksPath .githooks
 	chmod +x .githooks/pre-commit
@@ -72,6 +75,9 @@ streamlit-m02-p2: up-d ## Levantar la app Streamlit de Proyecto_02 (Modulo 02) e
 
 streamlit-m02-p2-local: ## [local] Levantar la app Streamlit de Proyecto_02 (Modulo 02) con poetry
 	poetry run streamlit run "docs/Modulo 02/Proyecto_02/src/app.py" --server.port=8502
+
+streamlit-m03-p3-local: ## [local] Levantar la app Streamlit de Proyecto_3 (Modulo 03) con poetry
+	poetry run streamlit run "docs/Modulo 03/Proyecto_3/app.py" --server.port=8503
 
 help: ## Mostrar esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
