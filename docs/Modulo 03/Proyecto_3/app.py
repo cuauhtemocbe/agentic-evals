@@ -142,9 +142,16 @@ with st.sidebar:
     
     model_name = st.selectbox(
         "Modelo de LLM Judge:",
-        ["gemini-3.1-flash-lite", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"],
+        [
+            "gemini-3.1-flash-lite",
+            "gemini-3.5-flash-lite",
+            "gemini-3.5-flash",
+            "gemini-3.7-flash",
+            "gemini-flash-lite-latest",
+        ],
         index=0,
-        help="El modelo de Gemini que actuará como evaluador (LLM Judge)."
+        help="El modelo de Gemini que actuará como evaluador (LLM Judge). "
+             "Si uno devuelve 503 (saturado), probá con otro."
     )
     
     threshold = st.slider(
@@ -322,7 +329,8 @@ with tab2:
                 query=st.session_state.eval_query,
                 response=st.session_state.eval_output,
                 contexts=ctx_list,
-                threshold=threshold
+                threshold=threshold,
+                model_name=model_name
             )
             st.session_state.eval_results = results
 
@@ -437,7 +445,8 @@ with tab3:
                 # Ejecutar el sintetizador desde el utilitario
                 syn_results = eval_utils.generate_synthetic_goldens(
                     contexts=selected_contexts,
-                    max_goldens_per_context=goldens_per_context
+                    max_goldens_per_context=goldens_per_context,
+                    model_name=model_name
                 )
                 
                 if not syn_results["success"]:
