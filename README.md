@@ -84,6 +84,8 @@ Elegí una de las dos formas de trabajar:
 > ```
 > o simplemente no corras `make install-hooks` si vas a trabajar solo sobre `docs/`.
 
+> **Pre-push CVE gate (Trivy):** `make install-hooks` también habilita `.githooks/pre-push`, que corre `trivy fs . --scanners vuln --severity CRITICAL --exit-code 1 --ignore-unfixed --quiet` antes de cada `git push` y lo bloquea si hay una vulnerabilidad CRITICAL con fix disponible (los HIGH/MEDIUM y los CRITICAL sin fix no bloquean). Requiere `trivy` en el `PATH` de tu máquina (no corre en Docker); si no está instalado, el push se bloquea también (fail-closed) con un mensaje que apunta a `.claude/skills/trivy-scan/setup.md`. El escaneo cubre los dos lockfiles del repo (`poetry.lock` y `docs/Modulo 02/Proyecto_02/poetry.lock`). Para saltearlo a conciencia en un push puntual: `git push --no-verify`.
+
 ## Trabajar con los notebooks en VSCode
 
 1. Instalar las extensiones de VSCode:
