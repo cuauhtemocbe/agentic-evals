@@ -49,9 +49,9 @@ streamlit-p1: up-d ## Levantar la app Streamlit de Proyecto_01 (Modulo 01) en Do
 streamlit-m03-p3: up-d ## Levantar la app Streamlit de Proyecto_3 (Modulo 03) en Docker (http://localhost:8503)
 	docker compose exec api streamlit run "docs/Modulo 03/Proyecto_3/app.py" --server.address=0.0.0.0 --server.port=8503
 
-install-hooks: ## Habilitar el git hook de pre-commit (lint + format, corre en Docker)
+install-hooks: ## Habilitar los git hooks: pre-commit (lint + format) y pre-push (Trivy CVE gate, requiere trivy en PATH)
 	git config core.hooksPath .githooks
-	chmod +x .githooks/pre-commit
+	chmod +x .githooks/*
 
 # --- Local (opcional: fallback sin Docker, requiere Python 3.13 y Poetry) ---
 
